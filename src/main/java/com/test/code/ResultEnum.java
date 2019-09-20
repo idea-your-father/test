@@ -14,6 +14,7 @@ public enum ResultEnum {
     /** 信息 */
     private String msg;
 
+    /** 枚举的构造函数 */
     ResultEnum(Integer code, String msg) {
         this.code = code;
         this.msg = msg;

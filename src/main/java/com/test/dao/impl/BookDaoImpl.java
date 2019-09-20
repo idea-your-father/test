@@ -41,6 +41,8 @@ public class BookDaoImpl extends BaseDao<Book> implements BookDao {
         return book;
     }
 
+    /*得到 集合*/
+
     @Override
     public List<Book> getBookInfoList() {
         Connection connection = JdbcUtil.getConnection();
