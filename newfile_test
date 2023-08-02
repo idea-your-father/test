@@ -6,11 +6,7 @@ from typing import Any, Dict, List, Literal, Optional, Union
 #   pass
 # class ChatCompletionResponse(BaseModel):
 #     model: str
-#     object: Literal["chat.completion", "chat.completion.chunk"]
-#     choices: List[Union[ChatCompletionResponseChoice, ChatCompletionResponseStreamChoice]]
-#     created: Optional[int] = Field(default_factory=lambda: int(time.time()))
-
-
+ 
 class ChatMessage():
     def __init__(self, role, c):
         self.role = role
@@ -30,18 +26,7 @@ class ChatCompletionRequest():
 
 def api(request: ChatCompletionRequest):
     if request.messages[-1].role != "user":
-        raise HTTPException(status_code=400, detail="Invalid request")
-    query = request.messages[-1].content
-    prev_messages = request.messages[:-1]
-    if len(prev_messages) > 0 and prev_messages[0].role == "system":
-        query = prev_messages.pop(0).content + query
-
-    history = []
-    if len(prev_messages) % 2 == 0:
-        for i in range(0, len(prev_messages), 2):
-            if prev_messages[i].role == "user" and prev_messages[i+1].role == "assistant":
-                history.append([prev_messages[i].content,
-                                prev_messages[i+1].content])
+    
 
     if request.stream:
         print("invalid error")
@@ -60,22 +45,10 @@ def api(request: ChatCompletionRequest):
 
 
 request = ChatCompletionRequest()
-# request.max_length = 20
-request.top_p = 0.02
-request.temerature = 1  # 越大随机性 越大
-request.max_length = 68
-
+ 
 for top_p in [0.1,   0.9888]:
     for temperature in [0.1, 0.5,  1]:
         request.top_p = top_p
-        request.temperature = temperature
-        request.messages = [
-            ChatMessage("system", "You are a helpful assistant."),
-            ChatMessage("user", "生产者和消费者的区别是什么?"),
-        ]
-        api(request)
-        print('===end====')
-
-
+       
 
 newfile_test
